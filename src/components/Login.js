@@ -7,17 +7,18 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
 const Login = () => {
-    const navigate=useNavigate();
+    
     const [isSignInForm,setIsSignInForm]=useState(true);
     const [errorMessage,setErrorMessage]=useState(null);
     const email=useRef(null);
     const password=useRef(null);
     const name=useRef(null);
+    
     const dispatch = useDispatch();
     const toogleSignInForm=()=>{
         setIsSignInForm(!isSignInForm);
     };
-
+    // console.log(errorMessage);
     const handleButtonClick=()=>{
         const message = checkValidate(email.current.value,password.current.value);
         // console.log(email.current.value);
@@ -33,20 +34,22 @@ const Login = () => {
             .then((userCredential) => {
                 
                 const user = userCredential.user;
-
+                // console.log(user);
                 updateProfile(user, {
                     displayName: name.current.value , photoURL:"https://avatars.githubusercontent.com/u/94172561?v=4",
                   }).then(() => {
                     const {uid,email,displayName,photoURL} = auth.currentUser;
                     dispatch(addUser({uid:uid,email:email,displayName:displayName,photoURL:photoURL}));
-                    navigate("/browse");
+                    // console.log(user);
+                    // navigate("/browse");
                   }).catch((error) => {
                     setErrorMessage(error.message)
                   });
 
 
-                console.log(user);
-                navigate('./browse');
+                // console.log(user);
+                // navigate('./browse');
+                // console.log("123bvc");
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -59,8 +62,9 @@ const Login = () => {
                 .then((userCredential) => {
                     // Signed in 
                     const user = userCredential.user;
-                    console.log(user);
-                    navigate('./browse');
+                    // console.log(user);
+                    // navigate('./browse');
+                    // console.log("hellodasdas");
                 })
                 .catch((error) => {
                     const errorCode = error.code;
@@ -68,7 +72,6 @@ const Login = () => {
                     setErrorMessage(errorCode+" "+errorMessage);
                 });
         }
-
     }
   return (
     <div>

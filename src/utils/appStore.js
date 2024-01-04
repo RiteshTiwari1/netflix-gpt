@@ -2,7 +2,7 @@ import userReducer from "./userSlice"
 const { configureStore } = require("@reduxjs/toolkit");
 
 
-console.log(userReducer);
+// console.log(userReducer);
 const appStore=configureStore(
     {
         reducer:{
