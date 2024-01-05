@@ -6,6 +6,7 @@ import { auth } from '../utils/firebase';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
+import {USER_AVATAR} from '../utils/constants';
 const Login = () => {
     
     const [isSignInForm,setIsSignInForm]=useState(true);
@@ -18,13 +19,11 @@ const Login = () => {
     const toogleSignInForm=()=>{
         setIsSignInForm(!isSignInForm);
     };
-    // console.log(errorMessage);
+
     const handleButtonClick=()=>{
         const message = checkValidate(email.current.value,password.current.value);
-        // console.log(email.current.value);
-        // console.log(password.current.value);
         setErrorMessage(message);
-        // console.log(message);
+
 
         if(message) return;
         
@@ -34,9 +33,9 @@ const Login = () => {
             .then((userCredential) => {
                 
                 const user = userCredential.user;
-                // console.log(user);
+                
                 updateProfile(user, {
-                    displayName: name.current.value , photoURL:"https://avatars.githubusercontent.com/u/94172561?v=4",
+                    displayName: name.current.value , photoURL: USER_AVATAR,
                   }).then(() => {
                     const {uid,email,displayName,photoURL} = auth.currentUser;
                     dispatch(addUser({uid:uid,email:email,displayName:displayName,photoURL:photoURL}));
